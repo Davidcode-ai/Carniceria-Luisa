@@ -12,21 +12,16 @@
     --font-body: 'Montserrat', sans-serif;     
 }
 
-html {
-    scroll-padding-top: 85px; /* Esto protege el espacio si no se usa JS */
-    scroll-behavior: smooth;
-}
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     background-color: var(--bg-dark);
     color: var(--text-white);
     font-family: var(--font-body);
-    overflow-x: hidden;
+    overflow-x: hidden; /* Evita scroll horizontal indeseado */
 }
 
-/* --- WHATSAPP MEJORADO --- */
+/* --- WHATSAPP FLOTANTE --- */
 .whatsapp-float {
     position: fixed;
     bottom: 30px;
@@ -48,7 +43,7 @@ body {
 .whatsapp-float:hover { transform: scale(1.05); }
 .whatsapp-float i { font-size: 1.5rem; }
 
-/* --- NAVBAR FIXED & CENTRADO --- */
+/* --- NAVBAR FIXED --- */
 .navbar {
     position: fixed; 
     top: 0;
@@ -60,45 +55,43 @@ body {
 }
 
 .nav-container {
-    max-width: 1400px; /* Un poco más ancho para dar aire */
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
-    position: relative; /* Clave para el centrado absoluto */
-    height: 70px; /* Altura fija para evitar saltos */
+    position: relative;
+    height: 80px; /* Altura fija */
 }
 
-/* 1. El Logo se queda a la izquierda */
+/* Logo */
 .logo {
     font-family: var(--font-display);
     font-size: 2.2rem; 
     letter-spacing: 1px;
     color: var(--text-white);
-    flex-shrink: 0; /* Evita que se aplaste */
-    z-index: 20; /* Por encima de todo */
+    flex-shrink: 0;
+    z-index: 20;
 }
 .text-gold { color: var(--primary-gold); }
 .dot { color: var(--accent-red); }
 
-/* 2. Los enlaces: Centrados matemáticamente en la pantalla */
+/* Enlaces (Centrados en PC) */
 .nav-links { 
     list-style: none; 
     display: flex; 
-    gap: 3rem; /* Más espacio entre letras */
-    
-    /* Truco del Centrado Perfecto */
+    gap: 3rem;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: max-content; /* Ocupa solo lo necesario */
+    width: max-content;
     z-index: 10;
 }
 
 .nav-links a {
     text-decoration: none;
     color: var(--text-white);
-    font-size: 0.9rem; /* Letra un pelín más fina y elegante */
+    font-size: 0.9rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -107,37 +100,19 @@ body {
 }
 .nav-links a:hover { color: var(--primary-gold); opacity: 1; }
 
-/* 3. Menú Hamburguesa: OCULTO por defecto en PC */
+/* Menú Hamburguesa (Oculto en PC) */
 .hamburger { 
-    display: none; /* <--- IMPORTANTE: Oculto en escritorio */
+    display: none; 
     font-size: 1.5rem; 
     cursor: pointer; 
     color: white;
-    margin-left: auto; /* Si aparece, se va a la derecha */
-}
-
-/* --- MOBILE (Pantallas pequeñas) --- */
-@media (max-width: 900px) { /* Subimos el punto de ruptura por seguridad */
-    .nav-links { 
-        display: none; /* Se ocultan los enlaces normales */
-        position: static; /* Reseteamos posicionamiento */
-        transform: none;
-    }
-    
-    .hamburger { 
-        display: block; /* Solo aquí aparece el icono */
-        position: absolute;
-        right: 2rem; /* Fijado a la derecha */
-    }
-    
-    .nav-container {
-        justify-content: space-between; /* Logo izq, Hamburguesa der */
-    }
+    margin-left: auto; 
 }
 
 /* --- HERO SECTION --- */
 .hero {
     height: 100vh;
+    min-height: 600px; /* Evita que se aplaste en móviles apaisados */
     background: url('https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
     display: flex;
     align-items: center;
@@ -145,15 +120,17 @@ body {
     text-align: center;
     position: relative;
     padding-top: 80px; 
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(15,17,16,1)); 
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(15,17,16,1)); 
 }
 
-.hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 20px; }
+.hero-content { position: relative; z-index: 2; max-width: 900px; width: 100%; }
 
 .badge-top {
     display: inline-block;
@@ -168,9 +145,9 @@ body {
 
 .hero h1 {
     font-family: var(--font-display);
-    font-size: clamp(3.5rem, 8vw, 7rem); 
-    line-height: 0.9;
-    margin-bottom: 1rem;
+    font-size: clamp(3.5rem, 10vw, 7rem); /* Responsive typography */
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
     text-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
@@ -184,41 +161,38 @@ body {
 
 .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;}
 
-.btn-primary {
-    background: var(--accent-red);
-    color: white;
-    padding: 15px 40px;
+.btn-primary, .btn-outline {
+    padding: 15px 35px;
     text-decoration: none;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: 0.3s;
+    font-size: 0.9rem;
 }
+
+.btn-primary { background: var(--accent-red); color: white; }
 .btn-primary:hover { background: #ff0000; box-shadow: 0 0 20px rgba(255,0,0,0.4); }
 
-.btn-outline {
-    border: 1px solid white;
-    color: white;
-    padding: 15px 40px;
-    text-decoration: none;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.3s;
-}
+.btn-outline { border: 1px solid white; color: white; }
 .btn-outline:hover { background: white; color: black; }
 
-/* --- SECCIONES COMUNES --- */
-.container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+/* --- SECCIONES GENERALES --- */
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 5rem 2rem; 
+}
+
 .sub-gold { color: var(--primary-gold); text-transform: uppercase; letter-spacing: 2px; font-weight: bold; font-size: 0.9rem;}
 .section-title { text-align: center; margin-bottom: 1rem; font-size: 3.5rem; color: var(--text-white); font-family: var(--font-display); }
 .section-desc { text-align: center; color: var(--text-gray); margin-bottom: 3rem; font-family: var(--font-serif); font-style: italic; font-size: 1.2rem; }
 .section-title-wrapper { text-align: center; margin-bottom: 3rem; }
 
-/* Retinto Section */
+/* Retinto Section (Split) */
 .split-impact {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* PC: 2 columnas */
     gap: 4rem;
     align-items: center;
 }
@@ -235,11 +209,12 @@ body {
 .check-list i { color: var(--primary-gold); margin-right: 10px; }
 .check-list strong { color: white; }
 
-/* --- CORTES --- */
+/* --- CORTES (Grid Responsivo) --- */
 .cuts-section { background-color: #141615; } 
 
 .cuts-grid {
     display: grid;
+    /* Esto es magia: crea columnas automáticas que no bajan de 250px */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
 }
@@ -250,43 +225,13 @@ body {
     text-align: center;
     border: 1px solid transparent;
     transition: all 0.3s ease;
-    position: relative;
 }
+.cut-card:hover { border-color: var(--primary-gold); transform: translateY(-5px); }
 
-.cut-card:hover {
-    border-color: var(--primary-gold);
-    transform: translateY(-5px);
-}
-
-.cut-icon {
-    font-size: 2.5rem;
-    color: var(--primary-gold);
-    margin-bottom: 1.5rem;
-}
-
-.cut-card h3 {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
-
-.cut-card p {
-    color: var(--text-gray);
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.badge-cut {
-    display: inline-block;
-    background: rgba(255,255,255,0.1);
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-white);
-}
+.cut-icon { font-size: 2.5rem; color: var(--primary-gold); margin-bottom: 1.5rem; }
+.cut-card h3 { font-family: var(--font-display); font-size: 2rem; letter-spacing: 1px; margin-bottom: 1rem; }
+.cut-card p { color: var(--text-gray); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
+.badge-cut { display: inline-block; background: rgba(255,255,255,0.1); padding: 5px 10px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-white); }
 
 /* Elaborados Grid */
 .grid-3 {
@@ -295,26 +240,17 @@ body {
     gap: 2rem;
 }
 
-.menu-item {
-    background: var(--bg-card);
-    transition: transform 0.3s;
-}
+.menu-item { background: var(--bg-card); transition: transform 0.3s; }
 .menu-item:hover { transform: translateY(-10px); }
-
 .menu-img { height: 250px; overflow: hidden; }
 .menu-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
 .menu-item:hover .menu-img img { transform: scale(1.1); }
-
 .menu-txt { padding: 2rem; }
 .menu-txt h3 { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--primary-gold); }
 .menu-txt p { color: var(--text-gray); }
 
 /* Ubicacion */
-.location-banner {
-    background: var(--bg-card);
-    padding: 4rem 2rem;
-    text-align: center;
-}
+.location-banner { background: var(--bg-card); padding: 4rem 2rem; text-align: center; }
 .location-content h2 { font-size: 2.5rem; margin-bottom: 0.5rem; }
 .map-frame { margin-top: 2rem; border: 1px solid var(--text-gray); }
 iframe { filter: grayscale(100%) invert(92%) contrast(83%); } 
@@ -329,64 +265,58 @@ footer { padding: 3rem 0; text-align: center; border-top: 1px solid #333; margin
 
 /* Animaciones */
 .fade-up, .fade-in-left, .fade-in-right { opacity: 0; } 
-.delay-1 { transition-delay: 0.2s; }
-.delay-2 { transition-delay: 0.4s; }
-.delay-3 { transition-delay: 0.6s; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* --- MOBILE (Pantallas pequeñas) --- */
-@media (max-width: 900px) {
-    /* 1. Ajuste del contenedor principal */
-    .nav-container {
-        justify-content: space-between; 
-        padding: 0 1.5rem; /* Un poco menos de padding lateral */
-    }
 
-    /* 2. El botón de las 3 rayitas */
-    .hamburger { 
-        display: block; 
-        font-size: 1.8rem; 
-        cursor: pointer; 
-        color: white;
-        z-index: 100; /* Siempre por encima */
-    }
+/* =========================================
+   MEDIA QUERIES (RESPONSIVIDAD REAL)
+   ========================================= */
 
-    /* 3. El MENÚ DESPLEGABLE (Oculto por defecto) */
+@media (max-width: 968px) {
+    /* 1. Navbar se transforma en móvil */
+    .nav-container { justify-content: space-between; padding: 0 1.5rem; }
+    .hamburger { display: block; z-index: 100; }
+    
     .nav-links { 
-        display: none; /* Oculto inicialmente */
+        display: none; 
         position: absolute;
-        top: 70px; /* Justo debajo de la barra */
-        left: 0;
-        width: 100%;
-        background-color: rgba(15, 17, 16, 0.98); /* Fondo casi negro opaco */
-        flex-direction: column; /* Lista vertical */
+        top: 80px; left: 0; width: 100%;
+        background-color: rgba(15, 17, 16, 0.98);
+        flex-direction: column;
         align-items: center;
         padding: 2rem 0;
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        transform: none; /* Quitamos el centrado de PC */
+        transform: none; /* Quitamos centrado absoluto */
     }
 
-    /* 4. Clase para cuando se abre (JS la activa) */
-    .nav-links.active {
-        display: flex; 
-        animation: slideDown 0.3s ease-out;
-    }
+    .nav-links.active { display: flex; animation: slideDown 0.3s ease-out; }
+    .nav-links a { display: block; padding: 1rem 0; font-size: 1.2rem; }
 
-    /* Estilo de los enlaces en móvil */
-    .nav-links a {
-        display: block;
-        padding: 1.5rem 0;
-        font-size: 1.2rem; /* Letra más grande para el dedo */
-    }
-
-    /* 5. Ajustes textos Hero en móvil */
+    /* 2. Hero: Texto más grande y botones apilados */
     .hero h1 { font-size: 3.5rem; }
-    .whatsapp-float span { display: none; } 
+    .hero-btns { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+    
+    /* 3. Columna Retinto: Apilada (foto arriba, texto abajo) */
+    .split-impact { grid-template-columns: 1fr; gap: 2rem; }
+    .img-wrapper { order: -1; margin-bottom: 1rem; } /* Foto primero */
+    .img-wrapper img { box-shadow: -10px 10px 0 var(--bg-card); } /* Sombra más pequeña */
+    
+    /* 4. Textos más pequeños en títulos */
+    .section-title { font-size: 2.8rem; }
+    
+    /* 5. Ajustes WhatsApp */
+    .whatsapp-float span { display: none; }
     .whatsapp-float { width: 50px; height: 50px; padding: 0; justify-content: center; }
-    .logo { font-size: 1.8rem; }
 }
 
-/* Animación suave de bajada */
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+@media (max-width: 480px) {
+    /* Ajustes extra para móviles muy pequeños */
+    .container { padding: 3rem 1.5rem; }
+    .hero h1 { font-size: 3rem; }
+    .nav-container { padding: 0 1rem; }
+    .logo { font-size: 1.8rem; }
+    
+    /* Grids a 1 sola columna */
+    .grid-3 { grid-template-columns: 1fr; }
+    .cuts-grid { grid-template-columns: 1fr; }
 }
